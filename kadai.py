@@ -1,21 +1,13 @@
-def calc_network_address(ip, netmask):
-    # IPアドレスとネットマスクを分割
-    ip_parts = list(map(int, ip.split(".")))
-    mask_parts = list(map(int, netmask.split(".")))
+import ipaddress
 
-    # AND演算でネットワークアドレスを計算
-    network_parts = []
+def calc_network_address():
+    ip = input("IPアドレスを入力してください: ")
+    mask = input("ネットマスクを入力してください: ")
 
-    for i in range(4):
-        network_parts.append(ip_parts[i] & mask_parts[i])
+    # IPアドレスとネットマスクからネットワークを作成
+    network = ipaddress.IPv4Network(f"{ip}/{mask}", strict=False)
 
-    # 文字列に戻す
-    return ".".join(map(str, network_parts))
+    print("ネットワークアドレス:", network.network_address)
 
-
-# 使用例
-ip = "192.168.1.10"
-netmask = "255.255.255.0"
-
-print(calc_network_address(ip, netmask))
-
+# 実行
+calc_network_address()
